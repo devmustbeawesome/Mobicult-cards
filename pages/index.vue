@@ -1,11 +1,15 @@
-<script lang="ts">
-import Vue from 'vue'
-
-export default Vue.extend({
-  name: 'IndexPage',
-})
+<script setup lang="ts">
 </script>
 
 <template>
-  <Tutorial />
+  <div class="container">
+    <div class="main_container">
+      <CardListMain></CardListMain>
+    </div>
+  </div>
 </template>
+<style lang="scss" scoped>
+.main_container {
+  margin: 20px auto;
+}
+</style>
