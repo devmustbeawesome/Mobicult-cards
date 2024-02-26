@@ -15,11 +15,16 @@ export default {
 </script>
 
 <template>
-    <transition-group name="list" tag="ul" class="main_card-List">
-        <li v-for="{ id, text } in cardList" :key="id" class="list-item">
-            <span class="card_text"> {{ text }}</span>
-        </li>
-    </transition-group>
+    <div>
+        <p v-show="!cardList.length">
+            Список карточек пуст. <nuxt-link to="/settings">Настройки</nuxt-link>
+        </p>
+        <transition-group v-show="cardList.length" name="list" tag="ul" class="main_card-List">
+            <li v-for="{ id, text } in cardList" :key="id" class="list-item">
+                <span class="card_text"> {{ text }}</span>
+            </li>
+        </transition-group>
+    </div>
 </template>
 
 <style lang="scss" scoped>

@@ -32,7 +32,10 @@ export default {
 
 <template>
     <div>
-        <transition-group name="list" tag="ul" class="settings_card-list">
+        <p v-show="!cardList.length">
+            Список карточек пуст.
+        </p>
+        <transition-group v-show="cardList.length" name="list" tag="ul" class="settings_card-list">
             <li v-for="(cardItem, index) in    cardList   " :key="cardItem.id" class="list-item">
                 <VInput :value="cardList[index].text" :class="['card_input']"
                     @input="(text) => changeCard(cardItem.id, text)" />
