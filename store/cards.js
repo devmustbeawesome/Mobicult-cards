@@ -16,6 +16,8 @@ export const actions = {
 
 export const mutations = {
     add(state, card) {
+        if (card.trim() === "")
+            return false
         state.cardList.push({ id: Date.now(), text: card })
         const jsonData = JSON.stringify(state)
         localStorage.setItem('cards-store', jsonData)
@@ -38,7 +40,7 @@ export const mutations = {
             if (storage) {
                 state.cardList = JSON.parse(storage).cardList
             } else {
-                const jsonData = JSON.stringify(context.state.cardList)
+                const jsonData = JSON.stringify({ cardList: state.cardList })
                 localStorage.setItem('cards-store', jsonData)
             }
         } catch (error) {

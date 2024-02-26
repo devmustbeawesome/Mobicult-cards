@@ -12,4 +12,10 @@
 .main_container {
   margin: 20px auto;
 }
+
+@media only screen and (max-width: 600px) {
+  .settings_container {
+    margin: 10px auto;
+  }
+}
 </style>

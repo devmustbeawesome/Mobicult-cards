@@ -2,25 +2,16 @@
 import { mapMutations } from 'vuex'
 
 export default {
-    name: 'CardList',
+    name: 'CardListSettings',
     props: {
-        // editable: { type: Boolean, required: false, default: false } 
     },
     data() {
         return {
         }
     },
     computed: {
-        cardList: {
-            get() {
-                return this.$store.state.cards.cardList
-            },
-            set(value, tabIndex) {
-                console.log(test)
-                console.log(value, tabIndex)
-                return false
-                // this.$store.dispatch('setTabTitle', { value: value, tabIndex: tabIndex })
-            }
+        cardList: function () {
+            return this.$store.state.cards.cardList
         }
     },
 
@@ -29,21 +20,22 @@ export default {
             removeCardHandler: 'cards/remove',
             changeCardHandler: 'cards/change',
         }),
-        log($event) {
-            console.log($event)
-        }
+        changeCard: function (id, text) {
+            if (text.trim() === "")
+                return false
+            this.changeCardHandler({ id, text });
+        },
     },
-
-
 }
+
 </script>
 
 <template>
     <div>
         <transition-group name="list" tag="ul" class="settings_card-list">
-            <li v-for="(cardItem, index) in cardList" :key="cardItem.id" class="list-item">
-                <VInputText :value="cardList[index].text"
-                    @input="(text) => changeCardHandler({ id: cardItem.id, text: text })" />
+            <li v-for="(cardItem, index) in    cardList   " :key="cardItem.id" class="list-item">
+                <VInput :value="cardList[index].text" :class="['card_input']"
+                    @input="(text) => changeCard(cardItem.id, text)" />
                 <VButton :class="['card_button']" @click="removeCardHandler(cardItem.id)"> Удалить</VButton>
             </li>
         </transition-group>
@@ -56,24 +48,12 @@ export default {
     flex-direction: column;
 }
 
-.card_text {
-    border: 1px solid black;
-    border-radius: 5px;
-    padding: 10px 15px;
-}
-
-.card_text,
-.card_button {
-    width: calc(50% - 20px);
-}
-
 .list-item {
-    display: flex;
-    margin-right: 10px;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
     margin-bottom: 15px;
+
 }
 
 .list-enter-active,
@@ -85,5 +65,24 @@ export default {
 .list-leave-to {
     opacity: 0;
     transform: translateX(30px);
+}
+
+@media only screen and (max-width: 768px) {
+    .list-item {
+        display: block;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        direction: rtl;
+        border-bottom: 1px solid black;
+    }
+
+    .card_button {
+        display: block;
+    }
+
+    .card_input {
+        direction: ltr;
+        margin-bottom: 5px;
+    }
 }
 </style>

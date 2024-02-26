@@ -16,6 +16,8 @@ export default {
 
     methods: {
         addCard() {
+            if (this.NewCard.trim() === "")
+                return false
             this.addCardHandler(this.NewCard)
             this.NewCard = ""
             this.$refs.newCardForm?.reset()
@@ -31,13 +33,13 @@ export default {
 <template>
     <div class="settings_card-add-wrapper">
         <VButton @click="ShowModal = true">Добавить карточку</VButton>
-        <VModal :active="ShowModal" :able-close="true" @update:active="ShowModal = $event">
+        <VModal :active="ShowModal" :able-close="true" @update-active="ShowModal = $event">
             <template #header>
                 <h2>Добавление карточки</h2>
             </template>
             <template #content>
                 <form ref="newCardForm" action="" @submit.prevent="addCard">
-                    <VInputText v-model="NewCard" :label="'Текст карточки'" :placeholder="'Введите текст'" />
+                    <VInput v-model="NewCard" />
                 </form>
             </template>
             <template #footer>

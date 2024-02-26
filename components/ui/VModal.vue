@@ -1,43 +1,51 @@
-<script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount, Ref, ref, watch } from "vue"
-type Key = { key: string }
-const props = defineProps({
-    active: { type: Boolean, required: false, default: false },
-    ableClose: { type: Boolean, required: false, default: true },
-})
-const emit = defineEmits(['update:active'])
+<script>
+export default {
+    name: "VModal",
+    props: {
+        active: { type: Boolean, required: false, default: false },
+        ableClose: { type: Boolean, required: false, default: true },
+    },
+    data() {
+        return {
+            internalActive: this.active,
+        }
+    },
+    watch: {
+        internalActive: function (value) {
+            this.$emit('update-active', value)
+        },
+        active: function (value) {
+            this.internalActive = value
+        }
+    },
+    methods: {
+        keyPress: function ({ key }) {
+            if (this.internalActive && (key === 'Escape' || key === 'Esc'))
+                this.internalActive = false
+        }
+    },
+    onBeforeMount: function () {
+        if (typeof window !== 'undefined') {
+            document.addEventListener('keyup', keyPress)
+        }
+    },
+    onBeforeUnmount: function () {
+        if (typeof window !== 'undefined') {
+            document.removeEventListener('keyup', keyPress)
+        }
+    },
 
-const active = ref(props.active)
-watch(active, (value: Ref<Boolean>) => emit('update:active', value))
-watch(
-    () => props.active,
-    (value) => (active.value = value)
-)
-
-onBeforeMount(() => {
-    if (typeof window !== 'undefined') {
-        document.addEventListener('keyup', keyPress)
-    }
-})
-onBeforeUnmount(() => {
-    if (typeof window !== 'undefined') {
-        document.removeEventListener('keyup', keyPress)
-    }
-})
-function keyPress({ key }: Key) {
-    if (active.value && (key === 'Escape' || key === 'Esc'))
-        active.value = false
 }
 </script>
 
 
 <template>
-    <div v-show="active">
-        <div class="modal-background" @click="active = false"></div>
+    <div v-show="internalActive">
+        <div class="modal-background" @click="internalActive = false"></div>
         <div class="modal">
             <div class="modal_header">
                 <slot name="header" />
-                <button v-if="ableClose" class="close-icon" @click="active = false">
+                <button v-if="ableClose" class="close-icon" @click="internalActive = false">
                     ╳
                 </button>
             </div>
@@ -107,10 +115,28 @@ function keyPress({ key }: Key) {
     background: none;
 }
 
-@media (max-width: 768px) {
+@media only screen and (max-width: 768px) {
+
     .modal {
         max-width: calc(100% - 20px);
         max-height: calc(100% - 20px);
+    }
+
+    .modal_footer {
+        padding-top: 5px;
+        border-top: 1px solid black;
+        margin-top: 5px;
+    }
+
+    .modal_header {
+        padding-right: 30px;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+
+    .close-icon {
+        width: 30px;
+        height: 30px;
     }
 }
 </style>

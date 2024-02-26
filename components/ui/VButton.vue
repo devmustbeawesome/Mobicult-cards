@@ -24,6 +24,15 @@ const emit = defineEmits(["click"])
     cursor: pointer;
 }
 
+@media only screen and (max-width: 600px) {
+    .btn {
+        font-size: 14px;
+        padding: 8px 13px;
+        border-radius: 4px;
+    }
+}
+
+
 .btn:hover {
     text-decoration: underline;
     transition: 1s;

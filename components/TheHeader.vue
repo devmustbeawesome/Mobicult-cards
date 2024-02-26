@@ -1,8 +1,8 @@
-<script setup lang="ts">
-
+<script>
+export default {
+  name: 'TheHeader',
+}
 </script>
-
-
 <template>
   <header>
     <div class="container">
@@ -46,11 +46,18 @@ header {
     display: inline-block;
     padding: 0 1rem;
     border-left: 1px solid #00bd7e;
+    font-size: 1.5rem;
   }
 
   nav a:first-of-type {
     padding-left: 0;
     border: 0;
+  }
+}
+
+@media (min-width: 720px) {
+  nav {
+    font-size: 1.5rem;
   }
 }
 
