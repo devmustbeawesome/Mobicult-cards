@@ -11,26 +11,43 @@ export default {
         }
     },
     computed: {
-        cardList() {
-            return this.$store.state.cards.cards
-        },
+        cardList: {
+            get() {
+                return this.$store.state.cards.cardList
+            },
+            set(value, tabIndex) {
+                console.log(test)
+                console.log(value, tabIndex)
+                return false
+                // this.$store.dispatch('setTabTitle', { value: value, tabIndex: tabIndex })
+            }
+        }
     },
+
     methods: {
         ...mapMutations({
             removeCardHandler: 'cards/remove',
-        })
+            changeCardHandler: 'cards/change',
+        }),
+        log($event) {
+            console.log($event)
+        }
     },
+
 
 }
 </script>
 
 <template>
-    <transition-group name="list" tag="ul" class="settings_card-List">
-        <li v-for="{ id, text } in cardList" :key="id" class="list-item">
-            <div class="card_text"> {{ text }}</div>
-            <VButton :class="['card_button']" @click="removeCardHandler(id)"> Удалить</VButton>
-        </li>
-    </transition-group>
+    <div>
+        <transition-group name="list" tag="ul" class="settings_card-list">
+            <li v-for="(cardItem, index) in cardList" :key="cardItem.id" class="list-item">
+                <VInputText :value="cardList[index].text"
+                    @input="(text) => changeCardHandler({ id: cardItem.id, text: text })" />
+                <VButton :class="['card_button']" @click="removeCardHandler(cardItem.id)"> Удалить</VButton>
+            </li>
+        </transition-group>
+    </div>
 </template>
 
 <style lang="scss" scoped>

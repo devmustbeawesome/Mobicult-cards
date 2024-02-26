@@ -8,9 +8,10 @@ export default {
     },
     computed: {
         cardList() {
-            return this.$store.state.cards.cards
+            return this.$store.state.cards.cardList
         },
     },
+
 
 
 }
@@ -26,13 +27,10 @@ export default {
 
 <style lang="scss" scoped>
 .main_card-List {
-    align-content: flex-start;
-    align-items: stretch;
-    flex-direction: row;
-    flex-wrap: wrap;
-    display: flex;
-    flex-grow: 1;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
 }
 
 /* .card_text {
@@ -47,12 +45,9 @@ export default {
     border: 2px solid teal;
     border-radius: 5px;
     padding: 10px 15px;
-    width: calc(25% - 16px);
-    margin-bottom: 15px;
     display: flex;
     align-items: center;
     justify-content: center;
-    min-height: 80px;
 }
 
 .list-enter-active,

@@ -18,7 +18,7 @@ export default {
   css: [
     '~/assets/css/main.scss'
   ],
-  // plugins: [{ src: '~plugins/vuex-shared-mutations.js', ssr: false }],
+  plugins: ['~/plugins/cardsStore.client.js'],
   components: {
     dirs: [
       '~/components',

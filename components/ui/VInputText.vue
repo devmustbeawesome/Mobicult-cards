@@ -24,7 +24,7 @@ const inputValue = ref(props.value)
         </label>
     </div>
 </template>
-<style>
+<style lang="scss" scoped>
 .form_input {
     background: none;
     padding: 10px 15px;
