@@ -1,4 +1,4 @@
-#https://mobicult-cards.netlify.app/
+# https://mobicult-cards.netlify.app/
 
 Создать проект на стеке Nuxt2, Vue2, SCSS, VUEX, без использования ui фреймвороков, все сверстать руками.
 
